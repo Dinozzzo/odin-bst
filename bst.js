@@ -64,6 +64,142 @@ function Tree(array) {
         }
       }
     },
+
+    // LEFT > ROOT > RIGHT
+    inOrderForEach(callback) {
+      // CHECK IF CALLBACK IS A FUNCTION
+      if (typeof callback !== "function") {
+        throw new Error("Callback needs to be a FUNCTION.");
+      }
+
+      function traverse(node) {
+        // IF NO VALUE = STOP
+        if (node === null) {
+          return;
+        }
+
+        traverse(node.left); // LEFT
+        callback(node.data); // NODE
+        traverse(node.right); // RIGHT
+      }
+
+      traverse(this.root);
+    },
+
+    // ROOT > LEFT > RIGHT
+    preOrderForEach(callback) {
+      // CHECK IF CALLBACK IS A FUNCTION
+      if (typeof callback !== "function") {
+        throw new Error("Callback needs to be a FUNCTION.");
+      }
+
+      function traverse(node) {
+        // IF NO VALUE = STOP
+        if (node === null) {
+          return;
+        }
+        callback(node.data); // NODE
+        traverse(node.left); // LEFT
+        traverse(node.right); // RIGHT
+      }
+
+      traverse(this.root);
+    },
+
+    // LEFT > RIGHT > ROOT
+    postOrderForEach(callback) {
+      // CHECK IF CALLBACK IS A FUNCTION
+      if (typeof callback !== "function") {
+        throw new Error("Callback needs to be a FUNCTION.");
+      }
+
+      function traverse(node) {
+        // IF NO VALUE = STOP
+        if (node === null) {
+          return;
+        }
+
+        traverse(node.left); // LEFT
+        traverse(node.right); // RIGHT
+        callback(node.data); // NODE
+      }
+
+      traverse(this.root);
+    },
+
+    height(value) {
+      let current = this.root;
+
+      // FIND THE NODE
+      while (current !== null) {
+        if (value === current.data) {
+          break;
+        }
+
+        // MOVE LEFT OR RIGHT
+        if (value < current.data) {
+          current = current.left;
+        } else {
+          current = current.right;
+        }
+      }
+
+      // IF NODE IS NOT FOUND
+      if (current === null) {
+        return undefined;
+      }
+
+      // CALCULATE HEIGHT
+      function getHeight(node) {
+        if (node === null) {
+          return -1; // SO LEAF = 0
+        }
+
+        const left = getHeight(node.left);
+        const right = getHeight(node.right);
+
+        return 1 + Math.max(left, right);
+      }
+
+      return getHeight(current);
+    },
+
+    isBalanced() {
+      function check(node) {
+        // IF NODE IS NOT FOUND
+        if (node === null) {
+          return 0;
+        }
+
+        const left = check(node.left);
+        const right = check(node.right);
+
+        // IF ONE SIDE IS ALREADY UNBALANCED
+        if (left === -1 || right === -1) {
+          return -1;
+        }
+
+        // CHECK HEIGHT DIFFERENCE
+        if (left - right > 1 || right - left > 1) {
+          return -1;
+        }
+
+        // RETURN HEIGHT
+        return 1 + Math.max(left, right);
+      }
+
+      return check(this.root) !== -1;
+    },
+
+    rebalance() {
+      const values = [];
+
+      // GET SORTED VALUES FROM TREE
+      this.inOrderForEach((value) => values.push(value));
+
+      // REBUILD BALANCED TREE
+      this.root = buildTree(values, 0, values.length - 1);
+    },
   };
 }
 
