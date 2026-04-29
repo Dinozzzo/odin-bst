@@ -1,3 +1,5 @@
+export { Node, Tree };
+
 function Node(data) {
   return {
     data: data,
@@ -36,6 +38,41 @@ function Tree(array) {
       }
 
       return false;
+    },
+
+    insert(value) {
+      //  IF TREE IS EMPTU
+      if (this.root === null) {
+        this.root = Node(value);
+        return;
+      }
+
+      let current = this.root;
+
+      while (true) {
+        // IF VALUE EXIST > NOTHING
+        if (value === current.data) {
+          return;
+        }
+
+        // GO LEFT
+        if (value < current.data) {
+          if (current.left === null) {
+            current.left = Node(value);
+            return;
+          }
+          current = current.left;
+        }
+
+        // GO RIGHT
+        else {
+          if (current.right === null) {
+            current.right = Node(value);
+            return;
+          }
+          current = current.right;
+        }
+      }
     },
 
     deleteItem(value) {

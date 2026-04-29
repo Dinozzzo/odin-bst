@@ -1,0 +1,21 @@
+{
+  "name": "odin-bst",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bst.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dinozzzo/odin-bst.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Dinozzzo/odin-bst/issues"
+  },
+  "homepage": "https://github.com/Dinozzzo/odin-bst#readme"
+}
